@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-navy-950 text-slate-400 font-body antialiased;
+    min-height: 100dvh;
+  }
+
+  /* Scrollbar — dark, minimal */
+  ::-webkit-scrollbar        { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track  { @apply bg-navy-900; }
+  ::-webkit-scrollbar-thumb  { @apply bg-navy-600 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-slate-600; }
+}
+
+@layer components {
+  /* ── Pillory section divider ── */
+  .pillory-divider {
+    @apply border-t border-white/5;
+  }
+
+  /* ── Stat card ── */
+  .stat-card {
+    @apply bg-navy-800 border border-white/5 rounded-xl p-5;
+  }
+
+  /* ── Table base ── */
+  .pillory-table {
+    @apply w-full text-left;
+  }
+
+  .pillory-table thead tr {
+    @apply border-b border-white/5;
+  }
+
+  .pillory-table thead th {
+    @apply py-2.5 px-4 text-xs font-medium text-slate-500 uppercase tracking-wider font-body;
+  }
+
+  .pillory-table tbody tr {
+    @apply border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors;
+  }
+
+  .pillory-table tbody td {
+    @apply py-3 px-4;
+  }
+}
