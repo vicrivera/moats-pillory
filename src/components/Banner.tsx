@@ -1,5 +1,7 @@
 import { formatWei, formatDate } from '../lib/format';
 import type { TraitorEntry } from '../types/pillory.types';
+import bannerBg from '../assets/img/banner.png';
+import bannerMobileBg from '../assets/img/banner-mobile.png';
 
 interface BannerProps {
   totalExits:    number;
@@ -19,13 +21,22 @@ export function Banner({
   const worstMoat = globalTop[0]?.moatName ?? '—';
 
   return (
-    <header className="relative overflow-hidden bg-navy-900 border-b border-gold-600/20">
+    <header className="relative overflow-hidden bg-navy-100 border-b border-gold-600/20">
       {/* Placeholder background image — replace src with real asset */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-10"
-        style={{ backgroundImage: "url('/images/banner-placeholder.jpg')" }}
-        aria-hidden="true"
-      />
+      <>
+        <img
+            src={bannerBg}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-left-top  opacity-90 hidden sm:block"
+            aria-hidden="true"
+        />
+        <img
+            src={bannerMobileBg}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-top opacity-90 sm:hidden"
+            aria-hidden="true"
+        />
+        </>
 
       {/* Vignette overlay */}
       <div className="absolute inset-0 bg-pillory-vignette" aria-hidden="true" />
@@ -33,21 +44,8 @@ export function Banner({
       {/* Top edge gold line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/60 to-transparent" />
 
-      <div className="relative max-w-7xl mx-auto px-6 py-16 lg:py-24">
-        {/* Eyebrow */}
-        <p className="font-display text-gold-500 text-xs tracking-[0.3em] uppercase mb-4">
-          Fortifi Moats · Avalanche
-        </p>
-
-        {/* Title */}
-        <h1 className="font-display font-black text-white text-5xl lg:text-7xl leading-none tracking-tight mb-3">
-          The Pillory
-        </h1>
-
-        {/* Tagline */}
-        <p className="font-display text-gold-400/70 text-lg lg:text-xl italic mb-10">
-          Where deserters are named.
-        </p>
+      <div className="relative max-w-7xl mx-auto px-6 py-3 flex flex-col justify-end" style={{ minHeight: '420px' }}>
+        
 
         {/* Live stats strip */}
         <div className="flex flex-wrap gap-8">
@@ -59,7 +57,7 @@ export function Banner({
 
         {/* Last sync */}
         {lastSyncedAt && (
-          <p className="mt-8 text-xs text-slate-600 font-mono">
+          <p className="mt-1 text-xs text-slate-600 font-mono">
             Last indexed: {formatDate(lastSyncedAt)}
           </p>
         )}

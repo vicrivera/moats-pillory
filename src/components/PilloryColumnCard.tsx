@@ -1,6 +1,7 @@
 import { ExternalLink } from 'lucide-react';
 import { truncateAddress, formatWei, formatFeePercent, snowtrace } from '../lib/format';
 import type { PilloryColumn, PilloryKind, TraitorEntry } from '../types/pillory.types';
+import greedyBg from '../assets/img/pillory.png';
 
 // ─── Rank value display per pillory kind ─────────────────────────────────────
 
@@ -12,12 +13,20 @@ function rankValue(entry: TraitorEntry, kind: PilloryKind): string {
   }
 }
 
-// ─── Pilory accent color per kind ────────────────────────────────────────────
+// ─── Pillory accent color per kind ────────────────────────────────────────────
 
 const KIND_STYLES: Record<PilloryKind, { accent: string; glow: string; border: string }> = {
   greedy:    { accent: 'text-gold-400',      glow: 'shadow-gold-500/10',   border: 'border-gold-600/30'    },
   reckless:  { accent: 'text-betrayal-400',  glow: 'shadow-betrayal-500/10', border: 'border-betrayal-600/30' },
   faithless: { accent: 'text-slate-300',     glow: 'shadow-slate-500/10',  border: 'border-slate-600/30'   },
+};
+
+// ─── Pillory baclkgrounds────────────────────────────────────────────
+
+const KIND_BG: Record<PilloryKind, string> = {
+  greedy:    greedyBg,
+  reckless:  greedyBg,
+  faithless: greedyBg,
 };
 
 // ─── Single entry in the pillory ─────────────────────────────────────────────
@@ -126,29 +135,30 @@ export function PilloryColumnCard({ column, isLoading }: PilloryColumnProps) {
   return (
     <article
       className={`
-        flex flex-col rounded-xl border bg-navy-900 overflow-hidden
+        flex flex-col rounded-xl border overflow-hidden relative
         shadow-xl ${styles.glow} ${styles.border}
       `}
     >
-      {/* Column header — placeholder image area */}
-      <div className="relative h-40 bg-navy-800 overflow-hidden">
-        {/* Placeholder — replace with real image per pillory */}
-        <div className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{ backgroundImage: `url('/images/pillory-${column.kind}-placeholder.jpg')` }}
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/60 to-transparent" />
+      {/* Column header */}
+<div className="relative h-40 overflow-hidden">
+  <img
+    src={KIND_BG[column.kind]}
+    alt=""
+    className="absolute inset-0 w-full h-full object-cover object-top opacity-40"
+    aria-hidden="true"
+  />
+  <div className="absolute inset-0 bg-navy-900/50" />
 
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          <h2 className={`font-display font-bold text-lg leading-tight ${styles.accent}`}>
-            {column.title}
-          </h2>
-          <p className="text-xs text-slate-500 mt-0.5">{column.subtitle}</p>
-        </div>
+  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+    <h2 className={`font-display font-bold text-lg leading-tight ${styles.accent}`}>
+      {column.title}
+    </h2>
+    <p className="text-xs text-slate-500 mt-0.5">{column.subtitle}</p>
+  </div>
 
-        {/* Top accent line */}
-        <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-current to-transparent ${styles.accent} opacity-40`} />
-      </div>
+  {/* Top accent line */}
+  <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-current to-transparent ${styles.accent} opacity-40`} />
+</div>
 
       {/* Entries */}
       <div className="flex-1">
